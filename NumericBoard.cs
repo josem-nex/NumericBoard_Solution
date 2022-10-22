@@ -2,7 +2,7 @@
     public static void Main()
     {
         
-        int[,] tablerp = new int[7,5]{    // introducir el tablero
+        int[,] board = new int[7,5]{    // introducir el tablero
             {1,0,0,0,35},
             {0,0,0,0,0},
             {0,0,0,0,0},   
@@ -12,19 +12,37 @@
             {0,0,0,0,0}
         };
         
+
+        PRINT(board);
+        System.Console.WriteLine();
+
+        PRINT(NumericSolution(board));  // retorna el tablero válido si tiene solución, null si no.
+
+    }
+    private static int[,] NumericSolution(int[,] table){
         int[] dx = new[]{0,0,-1,1};  // Array de direcciones
         int[] dy = new[]{1,-1,0,0};
 
-
-        Dictionary<int, (int,int)> nums = Conv(tablerp);
+        (int,int) cor = Pos(table); // para encontrar la posición del 1
+        if(cor.Item1==-1) return null;
+        Dictionary<int, (int,int)> nums = Conv(table);
         //En este diccionario añado los numeros prefijados !=0 del tablero de entrada
         //lo usare en la poda de la distancia
 
-        PRINT(tablerp);
-        System.Console.WriteLine();
+        return GameLogicSolution(table,1,cor.Item1,cor.Item2,dx,dy,nums);
 
-        PRINT(GameLogicSolution(tablerp,1,0,0,dx,dy,nums));  // retorna el tablero válido si tiene solución, null si no.
-
+    }
+    private static (int,int) Pos(int[,] table){
+        for (int i = 0; i < table.GetLength(0); i++)
+        {
+            for (int j = 0; j < table.GetLength(1); j++)
+            {
+                if(table[i,j]==1){
+                    return (i,j);
+                }    
+            }
+        }
+        return (-1,-1);
     }
     private static Dictionary<int, (int,int)> Conv(int[,] table){
         Dictionary<int, (int,int)> nums = new Dictionary<int, (int, int)>();
