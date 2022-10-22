@@ -1,6 +1,8 @@
 ﻿public class GameLogic{
     public static void Main()
     {
+        // aleluya
+        //rama probando
         
         int[,] tablerp = new int[7,5]{    // introducir el tablero
             {1,0,0,0,35},
